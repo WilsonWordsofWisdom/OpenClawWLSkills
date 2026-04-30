@@ -1,3 +1,17 @@
+"""
+install.py — OpenClaw WL Skills installer
+https://github.com/WilsonWordsofWisdom/OpenClawWLSkills
+ 
+Clones the WL Skills repo and installs all skills into ~/.openclaw/skills/
+Any pre-existing skill folders are backed up before being overwritten.
+ 
+Usage
+-----
+    python3 install.py             # install all skills
+    python3 install.py --dry-run   # preview without making changes
+"""
+
+
 import os
 import shutil
 import subprocess
@@ -32,7 +46,7 @@ def install_skills():
 
     # 1. Create target directory if it doesn't exist
     try:
- TARGET_DIR.mkdir(parents=True, exist_ok=True)
+        TARGET_DIR.mkdir(parents=True, exist_ok=True)
         log(f"Target directory verified: {TARGET_DIR}")
     except Exception as e:
         log(f"Could not create target directory: {e}", "ERROR")
@@ -59,7 +73,8 @@ def install_skills():
     installed_count = 0
     for skill_dir in repo_skills_path.iterdir():
         if skill_dir.is_dir():
-            skill_name = skill_dir.name.lower()
+            skill_name = skill_dir.name
+            #skill_name = skill_dir.name.lower()
             dest_path = TARGET_DIR / skill_name
             
             # Check if it's actually a skill (has SKILL.md)
