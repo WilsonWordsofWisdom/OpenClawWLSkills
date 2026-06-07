@@ -6,27 +6,28 @@ description: "Evaluates model suitability, suggests OpenRouter alternatives, and
 # Skill: Model Switcher
 
 ## Description
-Evaluates if the current model is optimal for the task, suggests better alternatives from OpenRouter, and restores the default model upon task completion.
+Evaluates task suitability, fetches a live shortlist of cost-effective models from OpenRouter, and modifies the global default model in openclaw.json to optimize performance.
 
 ## Objective
-Maximize task performance by using the most efficient model for the specific complexity of the request while maintaining the user's preferred default state.
+Ensure the most appropriate model is used for the current task by using live data and persistent configuration changes.
 
 ## Procedure
-1. **Suitability Check:** Analyze the current task. Determine if the default model is well-suited (e.g., is a "Flash" model being used for a complex architectural design?).
-2. **Propose Switch:** If the current model is suboptimal:
-   - Inform the user why a switch is recommended.
-   - Provide a list of suggested OpenRouter models.
-   - **For each suggestion, include:**
-     - **Pros:** (e.g., "Superior reasoning," "Massive context window").
-     - **Cons:** (e.g., "Higher latency," "More expensive").
-     - **Estimated Cost:** (e.g., "Approx $X per 1M tokens").
-3. **Execute Switch:** Upon user approval, use `session_status(model="model-id")` to override the session model.
-4. **Task Execution:** Perform the requested task using the optimized model.
-5. **Restore & Notify:** 
-   - Once the task is complete, switch the model back to the original default.
-   - Inform the user: *"Task complete. Model has been restored to [Default Model]."*
+1. **Suitability Check:** Analyze the current task. Determine if the default model is well-suited.
+2. **Fetch Shortlist:** 
+   - Run `bash scripts/get_shortlist.sh`.
+   - Present the resulting table of models, costs, and categories to the user.
+3. **Propose & Approve:** 
+   - Recommend 1-2 models from the shortlist based on the task (e.g., "Budget/Flash" for summaries, "Frontier/Pro" for architecture).
+   - **MANDATORY:** Wait for explicit user selection.
+4. **Execute Switch:** 
+   - Run `bash scripts/switch_model.sh [SELECTED_MODEL_ID]`.
+   - Verify the switch using `session_status`.
+5. **Task Execution:** Perform the requested task.
+6. **Restore & Notify:** 
+   - Once complete, switch the model back to the original default using the same script.
+   - Inform the user: *"Task complete. Default model has been restored."*
 
 ## Success Criteria
-- The user is informed of the suitability of the current model.
-- Model suggestions are transparent regarding cost and performance.
-- The session is always returned to the default model state.
+- Model selection is based on live OpenRouter pricing and availability.
+- The `openclaw.json` is updated and the gateway is restarted.
+- The system is returned to the original default model state after the task.
