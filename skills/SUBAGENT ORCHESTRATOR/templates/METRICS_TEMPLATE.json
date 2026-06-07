@@ -1,0 +1,13 @@
+{
+  "agent_id": "[agent-name]",
+  "last_deployed": null,
+  "success_count": 0,
+  "failure_count": 0,
+  "total_runs": 0,
+  "average_latency_ms": 0,
+  "last_failure_reason": null,
+  "metadata": {
+    "created_at": "[ISO-8601 Timestamp]",
+    "version": "1.0"
+  }
+}
