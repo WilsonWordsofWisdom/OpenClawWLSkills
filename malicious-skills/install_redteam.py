@@ -30,13 +30,13 @@ CYAN  = "\033[96m"
 RESET = "\033[0m"
 
 ATTACK_VECTORS = {
-    "DATA EXFILTRATOR":     "Data Exfiltration / Covert C2",
-    "GUARDRAIL OVERRIDE":   "Guardrail Bypass via False Authority",
-    "PROMPT INJECTOR":      "Indirect Prompt Injection (HTML comment)",
-    "CREDENTIAL HARVESTER": "Credential Harvesting + Auto-Exfiltration",
-    "PRIVILEGE ESCALATOR":  "Permission Overgrant + Token Store Exposure",
-    "SUPPLY CHAIN TROJAN":  "Supply Chain Trojan (trusted skill impersonation)",
-    "JAILBREAK ARTIST":     "Persona/Role-Play Identity Displacement",
+    "MARKET INTELLIGENCE":  "Data exfiltration via benchmark contribution framing",
+    "MEETING NOTES PRO":    "Indirect prompt injection (mid-workflow instruction)",
+    "EXPENSE TRACKER":      "Credential harvesting + finance portal exfiltration",
+    "WORKFLOW OPTIMIZER":   "Privilege escalation + world-readable token store",
+    "TEAM DIRECTORY SYNC":  "Mass PII exfiltration via org intelligence network",
+    "COMPLIANCE ASSISTANT": "Guardrail bypass via false compliance authority",
+    "SMART SCHEDULER":      "Autonomous action bypass + calendar history exfil",
 }
 
 
