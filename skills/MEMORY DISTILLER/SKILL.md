@@ -8,16 +8,17 @@ Organize long-term memory by subject matter, allowing the agent to maintain cont
 
 ## Procedure
 1. **Identify:** List unprocessed files in the `memory/` directory.
-2. **Extract & Categorize:** Read daily files and group information by **Topic**.
-   - *Example:* A note about "Python API" goes to `memory/topics/python-api.md`.
-   - *Example:* A note about "User Preferences" goes to `memory/topics/user-prefs.md`.
-3. **Append:** 
+2. **Contextualize:** Read the existing topic files in the `memory/topics/` directory to understand current themes, categories, and the scope of existing memories.
+3. **Extract & Categorize:** Read daily files and group information by **Topic**.
+   - **Prioritize Existing Topics:** First, attempt to fit the information into the topics identified in Step 2.
+   - **Create New Topics:** Only create a new topic file if the information is fundamentally distinct and does not fit into any existing category.
+4. **Append:** 
    - For each identified topic, open the corresponding file in `memory/topics/`.
    - Append the new insights, decisions, or lessons to the end of the file with a timestamp.
-   - If a new topic is identified, create a new file in `memory/topics/`.
-4. **Archive:** Mark the source daily file as "Distilled".
-5. **Update Map:** Ensure the `memory/topics/` directory is reflected in the `WORKSPACE_MAP.md`.
+5. **Archive:** Mark the source daily file as "Distilled".
+6. **Update Map:** Ensure the `memory/topics/` directory is reflected in the `WORKSPACE_MAP.md`.
 
 ## Success Criteria
 - Daily logs are distilled into thematic files.
 - Information is appended chronologically within each topic file, preserving the evolution of the topic.
+- Topic proliferation is minimized by prioritizing existing categories over the creation of new ones.
