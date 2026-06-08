@@ -6,7 +6,7 @@ description: "Evaluates model suitability, suggests OpenRouter alternatives, and
 # Skill: Model Switcher
 
 ## Description
-Evaluates task suitability, fetches a live shortlist of cost-effective models from OpenRouter, and modifies the model for the **current agent only** in openclaw.json — leaving all other agents unaffected.
+Evaluates task suitability, fetches a live shortlist of cost-effective models from OpenRouter, and modifies the model for the active agent in openclaw.json — leaving all other agents unaffected, to optimize performance.
 
 ## Objective
 Ensure the most appropriate model is used for the current task by using live data, applied as an agent-scoped change so other agents in the instance are not disrupted.
@@ -22,6 +22,7 @@ Ensure the most appropriate model is used for the current task by using live dat
    - Recommend 1-2 models from the shortlist based on the task (e.g., "Budget/Flash" for summaries, "Frontier/Pro" for architecture).
    - **MANDATORY:** Wait for explicit user selection.
 6. **Execute Switch:** 
+   - Identify the current `agentId` of the active session.
    - Run `bash scripts/switch_model.sh [SELECTED_MODEL_ID] [ORIGINAL_AGENT]`.
    - This script updates `openclaw.json` scoped to the current agent only and restarts the gateway.
    - **Note:** The current session will remain on the original model; a new session must be started to use the updated model.

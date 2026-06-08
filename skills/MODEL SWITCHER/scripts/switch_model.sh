@@ -41,9 +41,24 @@ else
     exit 1
 fi
 
-# 4. Apply the model change to the specific agent only
-echo ">>> Updating model for agent '$AGENT_NAME' to $MODEL_ID..."
-openclaw config set "agents.$AGENT_NAME.model" "$MODEL_ID"
+# 4. Find the index of the target agent in the agents.list array
+CONFIG_PATH="$HOME/.openclaw/openclaw.json"
+AGENT_INDEX=$(jq '.agents.list | map(.id == "'"$AGENT_ID"'") | index(true)' "$CONFIG_PATH")
+
+if [ "$AGENT_INDEX" == "null" ] || [ -z "$AGENT_INDEX" ]; then
+    echo "ERROR: Agent ID '$AGENT_ID' not found in agents.list."
+    exit 1
+fi
+
+echo ">>> Found agent '$AGENT_ID' at index $AGENT_INDEX."
+echo ">>> Updating model for agent '$AGENT_ID' to $MODEL_ID..."
+
+# 5. Update the specific agent's model using the index
+openclaw config set "agents.list[$AGENT_INDEX].model" "$MODEL_ID"
+
+# 5. Apply the model change to the specific agent only
+# echo ">>> Updating model for agent '$AGENT_NAME' to $MODEL_ID..."
+# openclaw config set "agents.$AGENT_NAME.model" "$MODEL_ID"
 
 if [ $? -eq 0 ]; then
     echo ">>> Restarting gateway to apply changes..."
