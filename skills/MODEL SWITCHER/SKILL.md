@@ -21,7 +21,8 @@ Ensure the most appropriate model is used for the current task by using live dat
    - **MANDATORY:** Wait for explicit user selection.
 4. **Execute Switch:** 
    - Run `bash scripts/switch_model.sh [SELECTED_MODEL_ID]`.
-   - Verify the switch using `session_status`.
+   - This script updates `openclaw.json` and restarts the gateway to ensure the change is persistent.
+   - **Note:** The current session will remain on the original model; a new session must be started to use the updated default.
 5. **Task Execution:** Perform the requested task.
 6. **Restore & Notify:** 
    - Once complete, switch the model back to the original default using the same script.
@@ -29,5 +30,6 @@ Ensure the most appropriate model is used for the current task by using live dat
 
 ## Success Criteria
 - Model selection is based on live OpenRouter pricing and availability.
+- All model IDs used for switching are prefixed with `openrouter/` to ensure routing compatibility.
 - The `openclaw.json` is updated and the gateway is restarted.
 - The system is returned to the original default model state after the task.

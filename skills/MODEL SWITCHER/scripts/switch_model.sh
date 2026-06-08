@@ -19,7 +19,13 @@ openclaw config set agents.defaults.model "$MODEL_ID"
 if [ $? -eq 0 ]; then
     echo ">>> Restarting gateway to apply changes..."
     openclaw gateway restart
-    echo "Successfully updated default model to $MODEL_ID and restarted gateway."
+    
+    # Verification step: check if gateway is responsive
+    if openclaw gateway status > /dev/null 2>&1; then
+        echo "Successfully updated default model to $MODEL_ID and restarted gateway."
+    else
+        echo "WARN: Gateway restart initiated, but status check failed. Please verify gateway is running."
+    fi
 else
     echo "Error: Failed to update model in openclaw.json"
     exit 1
