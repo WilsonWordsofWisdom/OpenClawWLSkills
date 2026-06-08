@@ -9,9 +9,11 @@ Maintain a clean workspace and provide a high-level structural map so agents can
 ## Procedure
 1. **Audit:** Run `exec ls -R` to list all files in the workspace.
 2. **Analyze:** Identify clusters of files based on extensions or naming patterns (e.g., `logs/`, `configs/`, `research/`).
-3. **Propose & Approve:** 
+3. **Mandatory Folders:** Create several must have folders for which files should be moved under for better house keeping. This include `knowledge`, `projects`, `security`, `logs`, and `subagents`.  
+4. **Propose & Approve:** 
    - Present the proposed folder names, paths, and the intended structure to the user.
    - **MANDATORY:** Wait for explicit user approval before proceeding to any file system modifications.
+   - **MANDATORY:** The original native md files that were created during the time of openclaw onboarding and agent creation should remain within the [root] workspace folder itsef (i.e. AGENTS.md, HEARTBEAT.md, SOUL.md, USER.md, IDENTITY.md, TOOLS.md) DO NOT MOVE them.  
 4. **Execute & Log:** 
    - Create approved directories using `exec mkdir -p <folder>`.
    - Move files using `exec mv <file> <folder>/`.
