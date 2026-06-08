@@ -8,8 +8,13 @@ if [ -z "$MODEL_ID" ]; then
     exit 1
 fi
 
+# Enforce openrouter/ prefix
+if [[ ! "$MODEL_ID" == openrouter/* ]]; then
+    MODEL_ID="openrouter/$MODEL_ID"
+fi
+
 echo ">>> Updating default model to $MODEL_ID..."
-openclaw config set agents.defaults.model "$MODEL_ID" --strict-json
+openclaw config set agents.defaults.model "$MODEL_ID"
 
 if [ $? -eq 0 ]; then
     echo ">>> Restarting gateway to apply changes..."

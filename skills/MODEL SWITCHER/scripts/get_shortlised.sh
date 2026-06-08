@@ -5,22 +5,27 @@
 MODELS_JSON=$(curl -s https://openrouter.ai/api/v1/models)
 
 if [ -z "$MODELS_JSON" ]; then
-    echo "Error: Could not fetch models from OpenRouter."
+    echo "Error: Could not fetch models from OpenRouter API."
     exit 1
 fi
 
-# Use jq to filter for popular providers and sort by cost (Input price)
 echo "### 🚀 OpenRouter Recommended Models"
 echo "| Model ID | Input Cost (1M) | Output Cost (1M) | Category |"
 echo "| :--- | :--- | :--- | :--- |"
 
-echo "$MODELS_JSON" | jq -r '.data[] | select(.id | test("openai|anthropic|google|meta")) | [.id, .pricing.prompt, .pricing.completion] | @tsv' | \
+# 2. Filter for high-quality providers and construct the routable OpenRouter ID
+# We use jq to extract the ID and pricing, then prepend 'openrouter/' 
+# because that is the required identifier for the OpenClaw routing layer.
+echo "$MODELS_JSON" | jq -r '.data[] | select(.id | test("openai|anthropic|google|meta")) | ["openrouter/" + .id, .pricing.prompt, .pricing.completion] | @tsv' | \
 sort -k2 -n | \
 while IFS=$'\t' read -r id prompt completion; do
-    # Categorize based on price
-    CATEGORY="Standard"
-    if (( $(echo "$prompt < 0.5" | bc -l) )); then CATEGORY="Budget/Flash"; fi
-    if (( $(echo "$prompt > 5.0" | bc -l) )); then CATEGORY="Frontier/Pro"; fi
+    
+    # 3. Categorize based on price using awk (more portable than bc)
+    CATEGORY=$(awk -v p="$prompt" 'BEGIN {
+        if (p < 0.5) print "Budget/Flash";
+        else if (p > 5.0) print "Frontier/Pro";
+        else print "Standard";
+    }')
     
     printf "| %s | \$%s | \$%s | %s |\n" "$id" "$prompt" "$completion" "$CATEGORY"
 done
