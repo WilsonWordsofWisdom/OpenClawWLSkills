@@ -14,14 +14,14 @@ Maintain a clean workspace and provide a high-level structural map so agents can
    - Present the proposed folder names, paths, and the intended structure to the user.
    - **MANDATORY:** Wait for explicit user approval before proceeding to any file system modifications.
    - **MANDATORY:** The original native md files that were created during the time of openclaw onboarding and agent creation should remain within the [root] workspace folder itsef (i.e. AGENTS.md, HEARTBEAT.md, SOUL.md, USER.md, IDENTITY.md, TOOLS.md) DO NOT MOVE them.  
-4. **Execute & Log:** 
+5. **Execute & Log:** 
    - Create approved directories using `exec mkdir -p <folder>`.
    - Move files using `exec mv <file> <folder>/`.
    - **Inform the user of every move** in a clear list: `[Original Path] → [New Path]`.
-5. **Map:** Create or update `WORKSPACE_MAP.md` in the root directory.
+6. **Map:** Create or update `WORKSPACE_MAP.md` in the root directory.
    - Generate a tree-like representation of the current structure.
    - Add brief descriptions for each folder's purpose (e.g., `/research: Contains web-captured technical docs`).
-6. **Verify:** Confirm the structure and the map are aligned.
+7. **Verify:** Confirm the structure and the map are aligned.
 
 ## Success Criteria
 - Files are organized into logical folders only after user approval.
